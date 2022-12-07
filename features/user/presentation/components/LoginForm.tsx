@@ -6,6 +6,7 @@ import {
   CircularProgress,
   TextFieldProps,
 } from "@mui/material";
+import MyButton from "@ui/MyButton";
 import useLogin from "features/user/presentation/hooks/useLogin";
 import { useRef } from "react";
 
@@ -48,13 +49,9 @@ const LoginForm = () => {
         inputRef={passwordRef}
         required
       />
-      <Button
-        variant="contained"
-        type="submit"
-        className="w-[20rem] h-[3.2rem] bg-primary"
-      >
-        {isLoading ? <CircularProgress sx={{ color: "white" }} /> : "Login"}
-      </Button>
+      <MyButton isLoading={isLoading} className="w-[20rem]">
+        Login
+      </MyButton>
     </form>
   );
 };

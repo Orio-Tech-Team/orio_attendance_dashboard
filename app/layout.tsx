@@ -1,4 +1,9 @@
-import './styles/globals.scss';
+"use client";
+
+import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
+import "./styles/globals.scss";
+
+import { theme } from "./themes/theme";
 
 export default function RootLayout({
   children,
@@ -8,7 +13,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head />
-      <body>{children}</body>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <body>{children}</body>
+      </ThemeProvider>
     </html>
   );
 }

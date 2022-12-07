@@ -1,18 +1,19 @@
-import { Button, CircularProgress, TextField } from '@mui/material';
-import MyDatePicker from '@ui/MyDatePicker';
-import MyTimePicker from '@ui/MyTimePicker';
-import React, { useEffect, useState } from 'react';
+import { TextField } from "@mui/material";
+import MyDatePicker from "@ui/MyDatePicker";
+import MyTimePicker from "@ui/MyTimePicker";
+import React, { useEffect, useState } from "react";
 
 import {
   dateToString,
   stringTimeToDate,
   timeToString,
-} from 'shared/utils/date_time';
-import MySnackbar from '@ui/MySnackbar';
-import useUpdateAttendance from 'features/attendance/presentation/hooks/useUpdateAttendance';
-import UpdateAttendanceParams from 'features/attendance/data/params/update_attendance_params';
-import MySwal from '@ui/MySwal';
-import { useRouter } from 'next/navigation';
+} from "shared/utils/date_time";
+import MySnackbar from "@ui/MySnackbar";
+import useUpdateAttendance from "features/attendance/presentation/hooks/useUpdateAttendance";
+import UpdateAttendanceParams from "features/attendance/data/params/update_attendance_params";
+import MySwal from "@ui/MySwal";
+import { useRouter } from "next/navigation";
+import MyButton from "@ui/MyButton";
 
 interface Props {
   update: string | null;
@@ -20,29 +21,29 @@ interface Props {
 const UpdateAttendanceForm = ({ update }: Props) => {
   const { updateAttendance, isLoading } = useUpdateAttendance();
 
-  const [message, setMessage] = useState('Add');
+  const [message, setMessage] = useState("Add");
 
-  const [empNo, setEmpNo] = useState('');
+  const [empNo, setEmpNo] = useState("");
   const [date, setDate] = useState(new Date());
   const [inTime, setInTime] = useState(new Date());
   const [outTime, setOutTime] = useState(new Date());
 
   const router = useRouter();
-  const navigateToAttendance = () => router.push('/dashboard');
+  const navigateToAttendance = () => router.push("/dashboard");
 
   useEffect(() => {
     if (update) {
-      setMessage('Update');
+      setMessage("Update");
 
-      const localData: any = JSON.parse(localStorage.getItem('data')!);
+      const localData: any = JSON.parse(localStorage.getItem("data")!);
       setEmpNo(localData.emp_id);
       setDate(new Date(Date.parse(localData.attendance_date)));
       setInTime(stringTimeToDate(localData.in_time));
       setOutTime(stringTimeToDate(localData.out_time));
     } else {
-      setMessage('Add');
+      setMessage("Add");
 
-      setEmpNo('');
+      setEmpNo("");
       setDate(new Date());
       setInTime(new Date());
       setOutTime(new Date());
@@ -62,16 +63,16 @@ const UpdateAttendanceForm = ({ update }: Props) => {
 
     res
       ? MySwal({
-          icon: 'success',
-          title: 'Success!',
+          icon: "success",
+          title: "Success!",
           text: `Attendance ${
-            message == 'Add' ? 'added' : 'updated'
+            message == "Add" ? "added" : "updated"
           } successfully`,
           onConfirm: navigateToAttendance,
         })
       : MySwal({
-          icon: 'error',
-          title: 'Error!',
+          icon: "error",
+          title: "Error!",
           text: `Employee ID is incorrect`,
           onConfirm: navigateToAttendance,
         });
@@ -85,27 +86,17 @@ const UpdateAttendanceForm = ({ update }: Props) => {
         variant="outlined"
         value={empNo}
         onChange={(e) => setEmpNo(e.target.value)}
-        disabled={message == 'Update'}
+        disabled={message == "Update"}
       />
       <MyDatePicker
         value={date}
         setValue={setDate}
         name="Date"
-        disabled={message == 'Update'}
+        disabled={message == "Update"}
       />
       <MyTimePicker value={inTime} setValue={setInTime} name="In Time" />
       <MyTimePicker value={outTime} setValue={setOutTime} name="Out Time" />
-      <Button
-        variant="contained"
-        type="submit"
-        className="h-[3.2rem] bg-blue-500"
-      >
-        {isLoading ? (
-          <CircularProgress sx={{ color: 'white' }} />
-        ) : (
-          `${message} Attendance`
-        )}
-      </Button>
+      <MyButton isLoading={isLoading}>{`${message} Attendance`}</MyButton>
     </form>
   );
 };

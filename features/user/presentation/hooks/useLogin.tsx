@@ -1,6 +1,6 @@
-import { setCookie } from 'cookies-next';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { setCookie } from "cookies-next";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
@@ -11,13 +11,13 @@ const useLogin = () => {
     setIsLoading(true);
     setError(null);
 
-    if (username === 'anam' && password === 'anam123') {
-      setCookie('token', '1234');
+    if (username === "arsalan" && password === "arsal123") {
+      setCookie("token", "1234");
       setIsLoading(false);
-      router.push('/dashboard');
+      router.push("/dashboard");
     } else {
       setIsLoading(false);
-      setError('Username or password is incorrect');
+      setError("Username or password is incorrect");
     }
   };
 
