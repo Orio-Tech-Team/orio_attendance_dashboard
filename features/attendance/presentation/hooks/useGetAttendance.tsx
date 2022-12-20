@@ -48,13 +48,13 @@ const useGetAttendance = (date: string) => {
         date
       );
       const newData = res
-        .filter(
-          (item) =>
-            item.employeeNumber == "1039" ||
-            item.employeeNumber == "1026" ||
-            item.employeeNumber == "1033" ||
-            item.employeeNumber == "1045"
-        )
+        // .filter(
+        //   (item) =>
+        //     item.employeeNumber == "1039" ||
+        //     item.employeeNumber == "1026" ||
+        //     item.employeeNumber == "1033" ||
+        //     item.employeeNumber == "1045"
+        // )
         .map((item) => {
           const chipColor = chipType(item.type);
           return [
