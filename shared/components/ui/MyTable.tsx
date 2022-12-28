@@ -1,5 +1,5 @@
-import MUIDataTable from 'mui-datatables';
-import { CircularProgress } from '@mui/material';
+import MUIDataTable from "mui-datatables";
+import { CircularProgress } from "@mui/material";
 
 interface Props {
   isLoading: boolean;
@@ -8,13 +8,14 @@ interface Props {
   title?: string;
 }
 
-const MyTable = ({ isLoading, data, columns, title = '' }: Props) => {
+const MyTable = ({ isLoading, data, columns, title = "" }: Props) => {
   const options: any = {
     selectableRows: false,
     download: false,
     elevation: 0,
     filter: false,
     print: false,
+    rowsPerPage: 100,
   };
 
   return (
