@@ -47,28 +47,30 @@ const useGetAttendance = (date: string) => {
       const res: AttendanceModel[] = await attendanceRepository.getAttendance(
         date
       );
-      const newData = res.map((item) => {
-        const chipColor = chipType(item.type);
-        return [
-          item.employeeNumber,
-          item.employeeName,
-          item.attendanceDate,
-          item.inTime,
-          item.outTime,
-          item.workingHour,
-          <Chip
-            key={item.employeeNumber}
-            label={item.type}
-            color={chipColor}
-          />,
-          item.shift,
-          <ModeIcon
-            key={item.employeeNumber}
-            className="cursor-pointer"
-            onClick={() => updateLocal(item)}
-          />,
-        ];
-      });
+      const newData = res
+        .sort((a, b) => (a.type > b.type ? -1 : 1))
+        .map((item) => {
+          const chipColor = chipType(item.type);
+          return [
+            item.employeeNumber,
+            item.employeeName,
+            item.attendanceDate,
+            item.inTime,
+            item.outTime,
+            item.workingHour,
+            <Chip
+              key={item.employeeNumber}
+              label={item.type}
+              color={chipColor}
+            />,
+            item.shift,
+            <ModeIcon
+              key={item.employeeNumber}
+              className="cursor-pointer"
+              onClick={() => updateLocal(item)}
+            />,
+          ];
+        });
       setData(newData);
       setIsLoading(false);
       return res;

@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import MyTable from '@ui/MyTable';
-import useGetAttendance from '../hooks/useGetAttendance';
+import MyTable from "@ui/MyTable";
+import useGetAttendance from "../hooks/useGetAttendance";
 
 const columns = [
-  'Employee #',
-  'Employee Name',
-  'Attendance Date',
-  'In Time',
-  'Out Time',
-  'Working Hours',
-  'Attendance Type',
-  'Shift',
-  'Action',
+  "ID",
+  "Name",
+  "Date",
+  "Time In",
+  "Time Out",
+  "Working Hours",
+  "Status",
+  "Shift",
+  "Action",
 ];
 
 interface Props {

@@ -1,5 +1,5 @@
-import Drawer from '@mui/material/Drawer';
-import SidebarItems from './SidebarItems';
+import Drawer from "@mui/material/Drawer";
+import SidebarItems from "./SidebarItems";
 
 const drawerWidth = 240;
 
@@ -12,7 +12,7 @@ interface Props {
 const Sidebar = ({ mobileOpen, setMobileOpen, handleDrawerToggle }: Props) => {
   let container: any = undefined;
 
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     container = window.document.body;
   }
 
@@ -21,14 +21,14 @@ const Sidebar = ({ mobileOpen, setMobileOpen, handleDrawerToggle }: Props) => {
       <Drawer
         container={container}
         variant="temporary"
-        open={mobileOpen}
+        open={mobileOpen && window.innerWidth < 600}
         onClose={handleDrawerToggle}
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.
         }}
         sx={{
-          display: { xs: 'block', sm: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          display: { xs: "block", sm: "none" },
+          "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
         }}
       >
         <SidebarItems drawerToggle={handleDrawerToggle} />
@@ -36,8 +36,8 @@ const Sidebar = ({ mobileOpen, setMobileOpen, handleDrawerToggle }: Props) => {
       <Drawer
         variant="permanent"
         sx={{
-          display: { xs: 'none', sm: 'block' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          display: { xs: "none", sm: "block" },
+          "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
         }}
         open
       >

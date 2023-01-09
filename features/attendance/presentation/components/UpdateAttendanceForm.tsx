@@ -31,6 +31,8 @@ const UpdateAttendanceForm = ({ update }: Props) => {
   const router = useRouter();
   const navigateToAttendance = () => router.push("/dashboard");
 
+  const [addOutTime, setAddOutTime] = useState(false);
+
   useEffect(() => {
     if (update) {
       setMessage("Update");
@@ -40,6 +42,19 @@ const UpdateAttendanceForm = ({ update }: Props) => {
       setDate(new Date(Date.parse(localData.attendance_date)));
       setInTime(stringTimeToDate(localData.in_time));
       setOutTime(stringTimeToDate(localData.out_time));
+
+      const myDate = new Date(Date.parse(localData.attendance_date));
+      const todayDate = new Date(Date.now());
+
+      if (
+        !(
+          myDate.getDate() === todayDate.getDate() &&
+          myDate.getMonth() === todayDate.getMonth() &&
+          myDate.getFullYear() === todayDate.getFullYear()
+        )
+      ) {
+        setAddOutTime(true);
+      }
     } else {
       setMessage("Add");
 
@@ -56,7 +71,7 @@ const UpdateAttendanceForm = ({ update }: Props) => {
       id: empNo,
       date: dateToString(date),
       inTime: timeToString(new Date(inTime)),
-      outTime: timeToString(new Date(outTime)),
+      outTime: addOutTime ? timeToString(new Date(outTime)) : "",
     };
 
     const res = await updateAttendance(params);
@@ -78,6 +93,8 @@ const UpdateAttendanceForm = ({ update }: Props) => {
         });
   };
 
+  const handleAddTimeOut = () => setAddOutTime(true);
+
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4 p-8 max-w-[35rem]">
       <h2>{message} Attendance</h2>
@@ -95,7 +112,18 @@ const UpdateAttendanceForm = ({ update }: Props) => {
         disabled={message == "Update"}
       />
       <MyTimePicker value={inTime} setValue={setInTime} name="In Time" />
-      <MyTimePicker value={outTime} setValue={setOutTime} name="Out Time" />
+      {addOutTime && (
+        <MyTimePicker value={outTime} setValue={setOutTime} name="Out Time" />
+      )}
+      {!addOutTime && (
+        <div className="max-w-[10rem]">
+          <MyButton
+            type="button"
+            onClick={handleAddTimeOut}
+          >{`Add Time Out`}</MyButton>
+        </div>
+      )}
+
       <MyButton isLoading={isLoading}>{`${message} Attendance`}</MyButton>
     </form>
   );
