@@ -8,6 +8,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import AssessmentIcon from "@mui/icons-material/Assessment";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -28,6 +29,11 @@ const SidebarItems = ({ drawerToggle }: Props) => {
       name: "Add Attendance",
       icon: <AddBoxIcon />,
       link: "/dashboard/add-attendance",
+    },
+    {
+      name: "Employee Report",
+      icon: <AssessmentIcon />,
+      link: "/dashboard/employee-report",
     },
   ];
 

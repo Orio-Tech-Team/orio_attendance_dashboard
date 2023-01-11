@@ -1,19 +1,19 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import { getCookie } from 'cookies-next';
-import AppError from 'shared/error/error';
+import axios, { AxiosRequestConfig } from "axios";
+import { getCookie } from "cookies-next";
+import AppError from "shared/error/error";
 
 interface FetchProps {
-  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   url: string;
-  data: Object;
+  data?: Object;
   params?: Object;
 }
 
 class Axios {
   // Post
   static async fetch({
-    method = 'GET',
-    url = '',
+    method = "GET",
+    url = "",
     data = {},
     params = {},
   }: FetchProps) {
@@ -21,12 +21,12 @@ class Axios {
       method: method,
       url: `${process.env.NEXT_PUBLIC_BASE_URL}${url}`,
       headers: {
-        Authorization: `Bearer ${getCookie('token')}`,
+        Authorization: `Bearer ${getCookie("token")}`,
       },
       data: data,
     };
-    if (method == 'GET') {
-      config['params'] = params;
+    if (method == "GET") {
+      config["params"] = params;
     }
 
     const result = await axios(config)

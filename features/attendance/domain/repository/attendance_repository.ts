@@ -1,6 +1,7 @@
-import AttendanceDataSource from 'features/attendance/data/datasource/attendance_datasource';
-import UpdateAttendanceParams from 'features/attendance/data/params/update_attendance_params';
-import AttendanceModel from '../models/attendance_model';
+import AttendanceDataSource from "features/attendance/data/datasource/attendance_datasource";
+import ReportParams from "features/attendance/data/params/report_params";
+import UpdateAttendanceParams from "features/attendance/data/params/update_attendance_params";
+import AttendanceModel from "../models/attendance_model";
 
 class AttendanceRepository {
   attendanceDataSource: AttendanceDataSource;
@@ -12,7 +13,7 @@ class AttendanceRepository {
     try {
       const res = await this.attendanceDataSource.getAttendance(date);
       const attendances: AttendanceModel[] = res.data.map(
-        (item: any) => new AttendanceModel(item),
+        (item: any) => new AttendanceModel(item)
       );
       return attendances;
     } catch (e) {
@@ -21,13 +22,27 @@ class AttendanceRepository {
   };
 
   updateAttendance = async (
-    params: UpdateAttendanceParams,
+    params: UpdateAttendanceParams
   ): Promise<boolean> => {
     try {
       const res = await this.attendanceDataSource.updateAttendance(params);
       return true;
     } catch (e) {
       return false;
+    }
+  };
+
+  attendanceReport = async (
+    params: ReportParams
+  ): Promise<AttendanceModel[]> => {
+    try {
+      const res = await this.attendanceDataSource.attendanceReport(params);
+      const attendances: AttendanceModel[] = res.data.map(
+        (item: any) => new AttendanceModel(item)
+      );
+      return attendances;
+    } catch (e) {
+      return [];
     }
   };
 }
