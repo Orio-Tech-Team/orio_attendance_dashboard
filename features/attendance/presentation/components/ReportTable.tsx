@@ -2,11 +2,14 @@
 
 import MyTable from "@ui/MyTable";
 import useGetAttendance from "../hooks/useGetAttendance";
+import { CSVLink } from "react-csv";
+import MyButton from "@ui/MyButton";
 
 const columns = [
   "ID",
   "Name",
   "Date",
+  "Day",
   "Time In",
   "Time Out",
   "Working Hours",
@@ -16,13 +19,21 @@ const columns = [
 
 interface Props {
   data: any[];
+  csvData: any[];
   isLoading: boolean;
   present: number;
   absent: number;
   leave: number;
 }
 
-const ReportTable = ({ data, isLoading, present, absent, leave }: Props) => {
+const ReportTable = ({
+  data,
+  csvData,
+  isLoading,
+  present,
+  absent,
+  leave,
+}: Props) => {
   return (
     <>
       <div className="mt-[2rem] flex gap-[2rem]">
@@ -38,6 +49,12 @@ const ReportTable = ({ data, isLoading, present, absent, leave }: Props) => {
           <p>Total Absent</p>
           <h2>{absent}</h2>
         </div>
+      </div>
+
+      <div className="mt-[2rem]">
+        <CSVLink data={csvData}>
+          <MyButton>Download Report</MyButton>
+        </CSVLink>
       </div>
       <MyTable isLoading={isLoading} data={data} columns={columns} />
     </>

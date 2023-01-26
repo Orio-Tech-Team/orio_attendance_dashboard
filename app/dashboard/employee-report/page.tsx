@@ -14,7 +14,7 @@ const Page = () => {
   const [toDate, setToDate] = useState<Date>(new Date());
   const employees = useGetEmployees();
   const [employeeId, setEmployeeId] = useState(0);
-  const { data, isLoading, getAttendance, present, absent, leave } =
+  const { data, csvData, isLoading, getAttendance, present, absent, leave } =
     useGetReport(fromDate, toDate, employeeId);
 
   return (
@@ -42,6 +42,7 @@ const Page = () => {
       </div>
       <ReportTable
         data={data}
+        csvData={csvData}
         isLoading={isLoading}
         present={present}
         absent={absent}

@@ -27,6 +27,7 @@ const useGetReport = (fromDate: Date, toDate: Date, empId: number) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<any[]>([]);
+  const [csvData, setCsvData] = useState<any[]>([]);
   const [present, setPresent] = useState<number>(0);
   const [absent, setAbsent] = useState<number>(0);
   const [leave, setLeave] = useState<number>(0);
@@ -46,17 +47,43 @@ const useGetReport = (fromDate: Date, toDate: Date, empId: number) => {
     setPresent(0);
     setAbsent(0);
     setLeave(0);
+    const newCsvData = [
+      [
+        "ID",
+        "Name",
+        "Date",
+        "Day",
+        "Time In",
+        "Time Out",
+        "Working Hours",
+        "Status",
+        "Shift",
+      ],
+    ];
+
     const newData = res
-      .sort((a, b) => (a.type > b.type ? -1 : 1))
+      // .sort((a, b) => (a.type > b.type ? -1 : 1))
       .map((item) => {
         if (item.type == "Present") setPresent((p) => p + 1);
         else if (item.type == "Absent") setAbsent((a) => a + 1);
         else if (item.type == "Late") setLeave((l) => l + 1);
         const chipColor = chipType(item.type);
+        newCsvData.push([
+          item.employeeNumber,
+          item.employeeName,
+          item.attendanceDate,
+          item.type == "Absent" ? "-" : item.day,
+          item.inTime,
+          item.outTime,
+          item.workingHour,
+          item.employeeNumber,
+          item.shift,
+        ]);
         return [
           item.employeeNumber,
           item.employeeName,
           item.attendanceDate,
+          item.type == "Absent" ? "-" : item.day,
           item.inTime,
           item.outTime,
           item.workingHour,
@@ -68,12 +95,14 @@ const useGetReport = (fromDate: Date, toDate: Date, empId: number) => {
           item.shift,
         ];
       });
+
+    setCsvData(newCsvData);
     setData(newData);
     setIsLoading(false);
     return res;
   };
 
-  return { data, isLoading, getAttendance, present, absent, leave };
+  return { data, csvData, isLoading, getAttendance, present, absent, leave };
 };
 
 export default useGetReport;
