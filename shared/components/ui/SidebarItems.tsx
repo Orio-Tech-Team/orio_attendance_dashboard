@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import AssessmentIcon from "@mui/icons-material/Assessment";
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -35,6 +36,11 @@ const SidebarItems = ({ drawerToggle }: Props) => {
       icon: <AssessmentIcon />,
       link: "/dashboard/employee-report",
     },
+    {
+      name: "Add Employee",
+      icon: <PersonAddAltIcon />,
+      link: "/dashboard/add-employee",
+    },
   ];
 
   const onClick = (link: string) => {
@@ -44,18 +50,25 @@ const SidebarItems = ({ drawerToggle }: Props) => {
 
   return (
     <div>
-      <Toolbar />
+      <Toolbar className="bg-primary"/>
       <div className=""></div>
-      <Divider />
-      <List>
+      <Divider className="bg-primary"/>
+      <List className="bg-primary" sx={{
+        height:"89vh"
+      }}>
         {items.map((item, index) => (
           <ListItem
             key={index}
             disablePadding
             onClick={() => onClick(item.link)}
+            sx={{
+              color:"white"
+            }}
           >
-            <ListItemButton>
-              <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemButton >
+              <ListItemIcon sx={{
+              color:"white"
+            }}>{item.icon}</ListItemIcon>
               <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>

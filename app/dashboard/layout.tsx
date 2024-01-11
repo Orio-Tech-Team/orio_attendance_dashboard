@@ -12,7 +12,7 @@ export default function DashboardLayout({
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    setMobileOpen(prevState => !prevState);
   };
 
   return (
