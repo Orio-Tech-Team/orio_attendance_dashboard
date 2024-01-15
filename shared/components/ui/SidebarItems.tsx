@@ -9,9 +9,11 @@ import Divider from "@mui/material/Divider";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import AssessmentIcon from "@mui/icons-material/Assessment";
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import ViewStreamIcon from '@mui/icons-material/ViewStream';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Props {
   drawerToggle: () => void;
@@ -38,8 +40,13 @@ const SidebarItems = ({ drawerToggle }: Props) => {
     },
     {
       name: "Add Employee",
-      icon: <PersonAddAltIcon />,
+      icon: <PersonAddIcon />,
       link: "/dashboard/add-employee",
+    },
+    {
+      name: "Employees List",
+      icon: <ViewStreamIcon />,
+      link: "/dashboard/employees",
     },
   ];
 
@@ -50,10 +57,18 @@ const SidebarItems = ({ drawerToggle }: Props) => {
 
   return (
     <div>
-      <Toolbar className="bg-primary"/>
+      <Toolbar className="w-full flex justify-center items-center">
+        <Image 
+        src={"http://cwms.testgrid.co:3000/pharm_logo.svg"} 
+        alt="logo" 
+        unoptimized
+        width={100}
+        height={100}
+        />
+      </Toolbar>
       <div className=""></div>
-      <Divider className="bg-primary"/>
-      <List className="bg-primary" sx={{
+      <Divider/>
+      <List sx={{
         height:"89vh"
       }}>
         {items.map((item, index) => (
@@ -61,14 +76,9 @@ const SidebarItems = ({ drawerToggle }: Props) => {
             key={index}
             disablePadding
             onClick={() => onClick(item.link)}
-            sx={{
-              color:"white"
-            }}
           >
             <ListItemButton >
-              <ListItemIcon sx={{
-              color:"white"
-            }}>{item.icon}</ListItemIcon>
+              <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>

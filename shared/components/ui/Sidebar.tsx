@@ -30,7 +30,6 @@ const Sidebar = ({ mobileOpen, setMobileOpen, handleDrawerToggle }: Props) => {
           display: { xs: "block", sm: "none" },
           "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
         }}
-        className="bg-primary"
       >
         <SidebarItems drawerToggle={handleDrawerToggle} />
       </Drawer>
