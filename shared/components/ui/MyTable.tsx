@@ -14,7 +14,7 @@ const MyTable = ({ isLoading, data, columns, title = "" }: Props) => {
     download: false,
     elevation: 0,
     filter: false,
-    print: false,
+    print: true,
     rowsPerPage: 100,
   };
 

@@ -1,18 +1,42 @@
 import { setCookie } from "cookies-next";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { exit } from "process";
+import { toast } from "react-toastify";
 
 const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  const userLogin = async (username:string,password:string) => {
+    try {
+      const { data } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL_USER}/auth/login`, {
+        user_name: username,
+        password: password,
+        application_tag: "ORIO-ATT-APP"
+      });
+
+      console.log("Login Successfull");
+      return data.token;
+
+    } catch (error) {
+      console.log(error);
+      toast.error("Login Unsucessful!");
+      // exit(1);
+    }
+  }
+
   const login = async (username: string, password: string) => {
     setIsLoading(true);
     setError(null);
 
-    if (username === "arsalan" && password === "arsal123") {
-      setCookie("token", "1234");
+    const token = await userLogin(username,password);
+
+    if (token) {
+      toast.success("Login Succesfull!");
+      setCookie("token", token);
       setIsLoading(false);
       router.push("/dashboard");
     } else {

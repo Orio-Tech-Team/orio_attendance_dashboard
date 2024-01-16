@@ -4,10 +4,8 @@ import { useState } from 'react';
 
 import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import MyButton from "@ui/MyButton";
-import MySelect from 'shared/components/MySelect';
 import axios from 'axios';
 import { exit } from 'process';
-import { NextResponse } from 'next/server';
 import { useToken } from '../hooks/useToken';
 
 const AddEmployeeForm = () => {
@@ -106,6 +104,7 @@ const AddEmployeeForm = () => {
       console.log(error);
     }
   }
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 

@@ -1,10 +1,7 @@
 'use client';
 
-import MyTable from "@ui/MyTable";
 import axios from "axios";
-import { useToken } from "features/employee/presentation/hooks/useToken";
 import { useEffect, useState } from "react";
-import { getCookie } from "cookies-next";
 import MUIDataTable from "mui-datatables";
 
 const columns = [

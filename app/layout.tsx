@@ -2,8 +2,10 @@
 
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import "./styles/globals.scss";
+import 'react-toastify/dist/ReactToastify.css';
 
 import { theme } from "./themes/theme";
+import { ToastContainer } from "react-toastify";
 
 export default function RootLayout({
   children,
@@ -15,7 +17,10 @@ export default function RootLayout({
       <head />
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <body>{children}</body>
+        <body>
+          <ToastContainer/>
+          {children}
+        </body>
       </ThemeProvider>
     </html>
   );

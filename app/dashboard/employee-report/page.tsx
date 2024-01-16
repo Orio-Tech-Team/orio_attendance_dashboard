@@ -5,9 +5,36 @@ import MyDatePicker from "@ui/MyDatePicker";
 import ReportTable from "features/attendance/presentation/components/ReportTable";
 import useGetEmployees from "features/attendance/presentation/hooks/useGetEmployees";
 import useGetReport from "features/attendance/presentation/hooks/useGetReport";
+import MUIDataTable from "mui-datatables";
 import { useState } from "react";
 import MySelect from "shared/components/MySelect";
 import { dateToString } from "shared/utils/date_time";
+
+const PdfReport = ({data}:{data:any}) => {
+  let cols = ["ID","Name","Date","Day","Time In","Time Out","Working Hours","Status","Shift"];
+
+  return (
+    // <div className="flex flex-col justify-center items-center">
+    //   <h2 className="text-primary my-3">Employee  Report</h2>
+    //   <table border={2}>
+    //     <thead>
+    //         <th>ID</th>
+    //         <th>Name</th>
+    //         <th>Date</th>
+    //         <th>Day</th>
+    //         <th>Time In</th>
+    //         <th>Time Out</th>
+    //         <th>Working Hours</th>
+    //         <th>Status</th>
+    //         <th>Shift</th>
+    //     </thead>
+    //     <tbody>
+    //     </tbody>
+    //   </table>
+    // </div>
+    <MUIDataTable title="" data={data} columns={cols} />
+  )
+}
 
 const Page = () => {
   const [fromDate, setFromDate] = useState<Date>(new Date());
@@ -16,6 +43,11 @@ const Page = () => {
   const [employeeId, setEmployeeId] = useState(0);
   const { data, csvData, isLoading, getAttendance, present, absent, leave } =
     useGetReport(fromDate, toDate, employeeId);
+
+  
+  data.map((itm)=>{
+    console.log(itm);
+  })
 
   return (
     <div className="p-8">
