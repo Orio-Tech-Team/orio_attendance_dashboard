@@ -66,7 +66,7 @@ const AddEmployeeForm = () => {
 
   const createEmployee = async (token: any) => {
     try {
-      const { data } = await axios.post(`http://localhost:5003/attendance-app/employee/create`, {
+      const { data } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}attendance-app/employee/create`, {
         employeeName: `${firstName} ${lastName}`,
         employeeNo: referenceNo,
         shiftId: shift
@@ -88,7 +88,7 @@ const AddEmployeeForm = () => {
 
   const createEmployeeStation = async (token: any) => {
     try {
-      const { data } = await axios.post(`http://localhost:5003/attendance-app/employee/create-employee-station`, {
+      const { data } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}attendance-app/employee/create-employee-station`, {
         employeeStation: station,
         employeeNo: referenceNo,
       }, {
