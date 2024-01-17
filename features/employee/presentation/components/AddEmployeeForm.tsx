@@ -5,8 +5,7 @@ import { useState } from 'react';
 import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import MyButton from "@ui/MyButton";
 import axios from 'axios';
-import { exit } from 'process';
-import { useToken } from '../hooks/useToken';
+import { toast } from 'react-toastify';
 
 const AddEmployeeForm = () => {
   const [firstName, setFirstName] = useState('');
@@ -40,8 +39,9 @@ const AddEmployeeForm = () => {
         return response.data;
       }
 
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      return error.response;
     }
   }
 
@@ -56,9 +56,9 @@ const AddEmployeeForm = () => {
       console.log("Login Successfull");
       return data.token;
 
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.message);
       console.log(error);
-      exit(1);
     }
   }
 
@@ -79,7 +79,8 @@ const AddEmployeeForm = () => {
         console.log("Employee Created!");
         return data;
       }
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.message);
       console.log(error);
     }
   }
@@ -100,7 +101,8 @@ const AddEmployeeForm = () => {
         console.log("Employee Station Created!");
         return data;
       }
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.message);
       console.log(error);
     }
   }
@@ -108,16 +110,29 @@ const AddEmployeeForm = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    await createUser();
-    const token = await userLogin();
-    
-    const hookToken = useToken();
-    hookToken.onCreate(token);
+    const response = await createUser();
+    if (response.data?.statusCode === 500) {
+      toast.error("Error while creating user!");
+      return;
+    } else {
+      const token = await userLogin();
 
-    const data = await createEmployee(token);
+      const data = await createEmployee(token);
 
-    if (data) {
-      await createEmployeeStation(token);
+      if (data) {
+        await createEmployeeStation(token);
+        setFirstName('');
+        setLastName('');
+        setPhone('');
+        setEmail('');
+        setUsername('');
+        setPassword('');
+        setIsEmployee(true);
+        setReferenceNo('');
+        setShift(1);
+        setStation("HO");
+        toast.success("Employee created successfull!");
+      }
     }
 
   }
