@@ -2,7 +2,6 @@ import { setCookie } from "cookies-next";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { exit } from "process";
 import { toast } from "react-toastify";
 
 const useLogin = () => {
@@ -12,6 +11,7 @@ const useLogin = () => {
 
   const userLogin = async (username:string,password:string) => {
     try {
+      console.log(username,password);
       const { data } = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL_USER}/auth/login`, {
         user_name: username,
         password: password,
@@ -36,7 +36,11 @@ const useLogin = () => {
 
     if (token) {
       toast.success("Login Succesfull!");
-      setCookie("token", token);
+      const expires = new Date();
+      expires.setDate(expires.getDate() + 7);
+      setCookie("token", token,{
+        expires
+      });
       setIsLoading(false);
       router.push("/dashboard");
     } else {
